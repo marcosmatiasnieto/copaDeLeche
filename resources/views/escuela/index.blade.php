@@ -3,6 +3,17 @@
 @section('title', 'Listado de Escuelas')
 
 @section('content')
+
+<div class="container mt-3">
+    @if (session('mensaje'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('mensaje') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
+
     <h1>Listado de Escuelas</h1>
     <a href="{{ route('escuelas.create') }}" class="btn btn-primary mb-3">Nueva Escuela</a>
     <table class="table table-bordered">
@@ -25,7 +36,9 @@
                     <td>{{ $escuela->direccion }}</td>
                     <td>{{ $escuela->matricula }}</td>
                     <td>{{ $escuela->numCUE }}</td>
-                    <td>{{ $escuela->archivo }}</td>
+                    <td>    <a href="{{ asset('storage/' . $escuela->archivo) }}" target="_blank">
+        {{ basename($escuela->archivo) }}
+    </a></td>
                     <td>
                         {{-- //editar --}}
                         <a href="{{ route('escuelas.edit', $escuela) }}" class="btn btn-warning btn-sm">Editar</a>
@@ -40,4 +53,7 @@
             @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        {!! $escuelas->links() !!}
+</div>
 @endsection

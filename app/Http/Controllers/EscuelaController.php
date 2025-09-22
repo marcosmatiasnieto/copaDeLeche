@@ -13,7 +13,7 @@ class EscuelaController extends Controller
      */
     public function index()
     {
-        $escuelas = Escuela::paginate(5);
+        $escuelas = Escuela::paginate(2);
         return view('escuela.index', compact('escuelas'));
         // dato importante compact('escuelas')=> ['escuelas' => $escuelas]
     }
@@ -30,11 +30,12 @@ class EscuelaController extends Controller
      */
     public function store(Request $request)
     {
-
-        $camopos=[
-            'nombre'=>'required|string|max:100',
+// validacion de datos en el create
+        $campos=[
+            'Escuela'=>'required|string|max:100',
             'direccion'=>'required|string|max:100',
-            'telefono'=>'required|string|max:15',
+            'matricula'=>'required|string|max:15',
+            'numCUE'=>'required|string|max:15',
             'archivo'=>'required|max:10000|mimes:pdf,doc,docx',
         ];
         $mensaje=[
@@ -42,25 +43,28 @@ class EscuelaController extends Controller
             'archivo.required'=>'El archivo es requerido',
         ];
 
-        $request->validate($camopos, $mensaje);
-
-
-
+        $request->validate($campos, $mensaje);
 
         $datosEscuela = request()->except('_token');
-        // return response()->json($datosEscuela);
+
         if($request->hasFile('archivo')) {
-            $datosEscuela['archivo'] = $request->file('archivo')->store('uploads', 'public');
-        }
+    $archivo = $request->file('archivo');
+
+    // Obtenemos el nombre original
+    $nombreOriginal = $archivo->getClientOriginalName();
+
+    // Guardamos el archivo con su nombre original dentro de "uploads"
+    $ruta = $archivo->storeAs('uploads', $nombreOriginal, 'public');
+
+    // Guardamos en la base solo la ruta con el nombre original
+    $datosEscuela['archivo'] = $ruta;
+}
 
         Escuela::insert($datosEscuela);
 
-        return redirect()->route('escuelas.index')->with('success', 'Escuela creada exitosamente.');
+        return redirect()->route('escuelas.index')->with('mensaje', 'Escuela creada exitosamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Escuela $escuela)
     {
         //
@@ -80,8 +84,28 @@ class EscuelaController extends Controller
      */
     public function update(Request $request, Escuela $escuela)
     {
+        // validacion de datos en el edit
+            $campos=[
+            'Escuela'=>'required|string|max:100',
+            'direccion'=>'required|string|max:100',
+            'matricula'=>'required|string|max:15',
+            'numCUE'=>'required|string|max:15',
+        ];
+        $mensaje=[
+            'required'=>'El :attribute es requerido',
+        ];
+        if($request->hasFile('archivo')) {
+            // Solo si se sube un archivo, validar tipo y tamaño
+            $campos['archivo'] = 'required|max:10000|mimes:pdf,doc,docx';
+            $mensaje['archivo.required'] = 'El archivo es requerido';
+
+        }
+        $request->validate($campos, $mensaje);
+
+        // datos que no queremos que guarde
         $datosEscuela = request()->except(['_token', '_method']);
 
+        // que el archivo que se edite se elimine el atiguo
         if($request->hasFile('archivo')) {
             $escuela = Escuela::findOrFail($escuela->id);
             Storage::delete('public/'.$escuela->archivo);
@@ -89,7 +113,8 @@ class EscuelaController extends Controller
         }
 
         Escuela::where('id', '=', $escuela->id)->update($datosEscuela);
-        return redirect()->route('escuelas.index')->with('success', 'Escuela actualizada exitosamente.');
+
+        return redirect()->route('escuelas.index')->with('mensaje', 'Escuela actualizada exitosamente.');
     }
 
     /**
@@ -97,6 +122,7 @@ class EscuelaController extends Controller
      */
 public function destroy(Escuela $escuela)
 {
+    // se elimina la escuela y su archivo
     $escuela = Escuela::findOrFail($escuela->id);
 
     if (Storage::delete('public/uploads' . $escuela->archivo)) {
