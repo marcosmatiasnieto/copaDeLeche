@@ -1,4 +1,5 @@
 <h1>{{$modo}} escuela</h1>
+{{-- // aqui recepcionamos el modo que viene del create o edit --}}
 
 @if ($errors->any()){{-- es el método oficial de Laravel para saber si hay al menos un error --}}
 

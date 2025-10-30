@@ -36,13 +36,13 @@
                     <td>{{ $escuela->direccion }}</td>
                     <td>{{ $escuela->matricula }}</td>
                     <td>{{ $escuela->numCUE }}</td>
-                    <td>    <a href="{{ asset('storage/' . $escuela->archivo) }}" target="_blank">
+                    <td><a href="{{ asset('storage/' . $escuela->archivo) }}" target="_blank">
         {{ basename($escuela->archivo) }}
     </a></td>
                     <td>
-                        {{-- //editar --}}
+                        {{-- editar --}}
                         <a href="{{ route('escuelas.edit', $escuela) }}" class="btn btn-warning btn-sm">Editar</a>
-                        {{-- //eliminar --}}
+                        {{-- eliminar --}}
                         <form action="{{ route('escuelas.destroy', $escuela) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')

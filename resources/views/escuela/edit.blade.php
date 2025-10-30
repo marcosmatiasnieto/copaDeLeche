@@ -5,7 +5,7 @@
 
 <form action="{{url('/escuelas/'.$escuela->id)}}" method="post" enctype="multipart/form-data">
 @csrf
-{{-- {{ method_field('PATCH') }} --}}
+
 @method('PATCH')
 
 @include('escuela.form' , ['modo'=>'Editar'])
