@@ -1,7 +1,9 @@
+{{-- aqui va el formulario que se usa tanto para crear como para editar una escuela --}}
 <h1>{{$modo}} escuela</h1>
-{{-- // aqui recepcionamos el modo que viene del create o edit --}}
+{{-- aqui recepcionamos el modo que viene del create o edit --}}
 
-@if ($errors->any()){{-- es el método oficial de Laravel para saber si hay al menos un error --}}
+@if ($errors->any())
+{{-- es el método oficial de Laravel para saber si hay al menos un error --}}
 
     <div class="alert alert-danger" role="alert">
         <ul>
@@ -12,7 +14,7 @@
     </div>
 @endif
 
-<div class="form-group">
+<div class="form-group ">
 <label for="Escuela">Escuela</label>
 <input type="text" class="form-control mb-3 " name="Escuela"  id="Escuela" value="{{isset($escuela->Escuela)?$escuela->Escuela:old('Escuela')}}">
 </div>

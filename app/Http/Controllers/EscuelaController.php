@@ -13,7 +13,8 @@ class EscuelaController extends Controller
      */
     public function index()
     {
-        $escuelas = Escuela::paginate(2);
+        // obtenemos todas las escuelas de la base de datos y las paginamos de 5 en 5
+        $escuelas = Escuela::paginate(5);
         return view('escuela.index', compact('escuelas'));
         // dato importante compact('escuelas')=> ['escuelas' => $escuelas]
     }
@@ -30,7 +31,7 @@ class EscuelaController extends Controller
      */
     public function store(Request $request)
     {
-// validacion de datos en el create
+    //aqui va la logica para guardar una nueva escuela y validacion de datos en el create
         $campos=[
             'Escuela'=>'required|string|max:100',
             'direccion'=>'required|string|max:100',
@@ -44,9 +45,9 @@ class EscuelaController extends Controller
         ];
 
         $request->validate($campos, $mensaje);
-
         $datosEscuela = request()->except('_token');
 
+        //verificamos si hay un archivo subido
         if($request->hasFile('archivo')) {
     $archivo = $request->file('archivo');
 
@@ -75,6 +76,7 @@ class EscuelaController extends Controller
      */
     public function edit(Escuela $escuela)
     {
+        // buscamos la escuela por su id
         $escuela = Escuela::findOrFail($escuela->id);
         return view('escuela.edit', compact('escuela'));
     }
@@ -105,7 +107,7 @@ class EscuelaController extends Controller
         // datos que no queremos que guarde
         $datosEscuela = request()->except(['_token', '_method']);
 
-        // que el archivo que se edite se elimine el atiguo
+        // aqui vemos que el archivo que se edite se elimine el atiguo
         if($request->hasFile('archivo')) {
             $escuela = Escuela::findOrFail($escuela->id);
             Storage::delete('public/'.$escuela->archivo);
@@ -114,22 +116,21 @@ class EscuelaController extends Controller
 
         Escuela::where('id', '=', $escuela->id)->update($datosEscuela);
 
+        // redireccionamos a la vista principal con un mensaje
+
         return redirect()->route('escuelas.index')->with('mensaje', 'Escuela actualizada exitosamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
 public function destroy(Escuela $escuela)
 {
-    // se elimina la escuela y su archivo
+        // se elimina la escuela y su archivo
     $escuela = Escuela::findOrFail($escuela->id);
-
+        // eliminar el archivo asociado
     if (Storage::delete('public/uploads' . $escuela->archivo)) {
         Escuela::destroy($escuela->id);
     }
 
-
+// redireccionamos a la vista principal con un mensaje
     return redirect()->route('escuelas.index')->with('success', 'Escuela eliminada exitosamente.');
 }
 }
