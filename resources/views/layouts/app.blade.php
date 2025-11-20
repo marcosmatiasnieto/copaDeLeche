@@ -19,8 +19,9 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
-    <div id="app">
+
+<body class="d-flex flex-column min-vh-100">
+    <div id="app" class="flex-grow-1 d-flex flex-column">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -79,9 +80,15 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="flex-grow-1 py-4">
             @yield('content')
         </main>
     </div>
+        <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <div class="container">
+            <p class="mb-1">&copy; {{ date('Y') }} Mi Proyecto de Escuelas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
+
 </html>

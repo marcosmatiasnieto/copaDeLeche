@@ -19,3 +19,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/', [EscuelaController::class,'index'])->name('home');
 });
+
+Route::patch('/escuelas/{id}/aprobar', [EscuelaController::class, 'aprobar'])->name('escuelas.aprobar');
+Route::patch('/escuelas/{id}/rechazar', [EscuelaController::class, 'rechazar'])->name('escuelas.rechazar');
+

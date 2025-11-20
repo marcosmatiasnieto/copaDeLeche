@@ -1,5 +1,5 @@
 {{-- aqui va el formulario que se usa tanto para crear como para editar una escuela --}}
-<h1>{{$modo}} escuela</h1>
+{{-- <h1>{{$modo}} escuela</h1> --}}
 {{-- aqui recepcionamos el modo que viene del create o edit --}}
 
 @if ($errors->any())
@@ -15,28 +15,43 @@
 @endif
 
 <div class="form-group ">
-<label for="Escuela">Escuela</label>
-<input type="text" class="form-control mb-3 " name="Escuela"  id="Escuela" value="{{isset($escuela->Escuela)?$escuela->Escuela:old('Escuela')}}">
+<label for="escuela">Escuela</label>
+<input type="text" class="form-control mb-3 " name="escuela"  id="escuela" value="{{isset($escuela->escuela)?$escuela->escuela:old('escuela')}}">
 </div>
 <div class="form-group">
-<label for="direccion">Direccion</label>
-<input type="text" class="form-control mb-3 " name="direccion" id="direccion" value="{{isset($escuela->direccion)?$escuela->direccion:old('direccion')}}">
+<label for="n_cue">NumCUE</label>
+<input type="number" class="form-control mb-3 " name="n_cue" id="n_cue" value="{{isset($escuela->n_cue)?$escuela->n_cue:old('n_cue')}}">
 </div>
 <div class="form-group">
 <label for="matricula">Matricula</label>
 <input type="number" class="form-control mb-3 " name="matricula" id="matricula"  value="{{ isset($escuela->matricula)?$escuela->matricula:old('matricula')}}">
 </div>
 <div class="form-group">
-<label for="numCUE">NumCUE</label>
-<input type="number" class="form-control mb-3 " name="numCUE" id="numCUE" value="{{isset($escuela->numCUE)?$escuela->numCUE:old('numCUE')}}">
+<label for="telefono">Telefono</label>
+<input type="number" class="form-control mb-3 " name="telefono" id="telefono"  value="{{ isset($escuela->telefono)?$escuela->telefono:old('telefono')}}">
 </div>
 <div class="form-group">
+<label for="direccion">Direccion</label>
+<input type="text" class="form-control mb-3 " name="direccion" id="direccion" value="{{isset($escuela->direccion)?$escuela->direccion:old('direccion')}}">
+</div>
+<div class="form-group">
+<label for="localidad">Localidad</label>
+<input type="text" class="form-control mb-3 " name="localidad" id="localidad" value="{{isset($escuela->localidad)?$escuela->localidad:old('localidad')}}">
+</div>
+<div class="form-group">
+<label for="provincia">Provincia</label>
+<input type="text" class="form-control mb-3 " name="provincia" id="provincia" value="{{isset($escuela->provincia)?$escuela->provincia:old('provincia')}}">
+</div>
+
+<div class="form-group">
 <label for="archivo">Archivo</label>
-@if(@isset($escuela->archivo))
+@if(isset($escuela->archivo))
 <a href="{{ asset('storage').'/'.$escuela->archivo}}" target="_blank">Ver archivo actual</a>
 @endif
-<input type="file" class="form-control mb-3 " name="archivo" id="archivo" value="">
+<input type="file" class="form-control mb-3 " name="archivo" id="archivo" >
 </div>
-<input class="btn btn-success btn-sm" type="submit"  value="{{$modo}} datos">
+
+
+<input class="btn btn-success btn-sm" type="submit" >
 <a href="{{ route('escuelas.index') }}" class="btn btn-primary btn-sm">Volver a Inicio</a>
 

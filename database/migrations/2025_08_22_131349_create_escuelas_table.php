@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::create('escuelas', function (Blueprint $table) {
             $table->id();
-            $table->string('Escuela');
-            $table->string('direccion');
+            $table->string('escuela');
+            $table->integer('n_cue');
             $table->integer('matricula');
-            $table->integer('numCUE');
+            $table->string('telefono') ->nullable();
+            $table->string('direccion');
+            $table->string('localidad')->nullable(); ;
+            $table->string('provincia')->nullable(); ;
+
             $table->string('archivo');
+            $table->enum('estado', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');
             $table->timestamps();
         });
     }

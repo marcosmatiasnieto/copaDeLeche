@@ -4,16 +4,16 @@
 
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-8"> 
+        <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Crear Escuela</h4>
+                    <h4 class="mb-0">Editar escuela</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{url('/escuelas/'.$escuela->id)}}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('escuelas.update', $escuela->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
-                        @include('escuela.form' , ['modo'=>'Editar'])
+                        @include('escuela.form')
                     </form>
                 </div>
             </div>

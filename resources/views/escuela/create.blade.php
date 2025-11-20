@@ -10,9 +10,9 @@
                     <h4 class="mb-0">Crear Escuela</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('/escuelas') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('escuelas.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @include('escuela.form', ['modo'=>'Crear'])
+                        @include('escuela.form')
                     </form>
                 </div>
             </div>

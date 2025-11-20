@@ -9,10 +9,15 @@ class Escuela extends Model
     protected $fillable = [
         // Definimos los campos que se pueden asignar masivamente
         'Escuela',
-        'direccion',
+        'n_cue',
         'matricula',
-        'numCUE',
-        'archivo'
+        'telefono',
+        'direccion',
+        'localidad',
+        'provincia',
+
+        'archivo',
+        'estado'
     ];
 
     // Define any relationships if necessary
