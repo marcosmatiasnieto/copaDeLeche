@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Editar Escuela')
+@section('title', 'Crear Escuela')
 @section('content')
 
 <div class="container mt-4">
@@ -7,13 +7,12 @@
         <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Editar escuela</h4>
+                    <h4 class="mb-0">Crear Escuela</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('escuelas.update', $escuela->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('escuelas.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @method('PATCH')
-                        @include('escuela.form')
+                        @include('escuelas.form')
                     </form>
                 </div>
             </div>

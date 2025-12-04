@@ -3,6 +3,10 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsEscuela;
+use GuzzleHttp\Promise\Is;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,7 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+
+        // Alias del middleware admin
+        $middleware->alias([
+            'admin' => IsAdmin::class,
+            'escuela' => IsEscuela::class,
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

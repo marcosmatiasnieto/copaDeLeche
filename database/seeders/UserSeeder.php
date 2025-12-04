@@ -13,21 +13,17 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'Marcos Nieto',
-            'email' => 'marcosnieto2293@gmail.com',
-            'password' => Hash::make('12345678'), // Contraseña encriptada
-            
-        ]);
                 User::create([
             'name' => 'Administrador',
             'email' => 'administrador@gmail.com',
-            'password' => Hash::make('admin123'), // Contraseña encriptada
+            'password' => Hash::make('admin123'),// Contraseña encriptada
+            'role' => 'admin',
         ]);
                         User::create([
             'name' => 'Escuela',
             'email' => 'escuela@gmail.com',
             'password' => Hash::make('escuela123'), // Contraseña encriptada
+            'role' => 'escuela',
         ]);
     }
 }
