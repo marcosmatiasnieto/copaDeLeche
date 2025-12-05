@@ -14,12 +14,17 @@
         @endif
 
 
-        <h1>Listado de Escuelas</h1>
+        <div class="mb-4">
+            <h1 class="fw-bold display-6">Listado de Escuelas</h1>
+            <p class="text-muted">Administrá solicitudes, estados y registros.</p>
+        </div>
 
-        <a href="{{ route('escuelas.create') }}" class="btn btn-primary mb-3">Nueva Escuela</a>
+        <a href="{{ route('escuelas.create') }}" class="btn btn-primary shadow-sm mb-3">
+            ➕ Nueva Escuela
+        </a>
 
         <form method="GET" action="{{ route('escuelas.index') }}" class="mb-3">
-            <div class="input-group">
+            <div class="input-group mb-3 shadow-sm">
                 <input type="text" name="busqueda" class="form-control" placeholder="Buscar por CUE o nombre..."
                     value="{{ $busqueda ?? '' }}">
 
@@ -36,7 +41,7 @@
         </form>
 
 
-        <table class="table table-bordered">
+        <table class="table table-hover align-middle table-bordered">
             <thead>
                 <tr>
                     <th>#</th>
@@ -75,11 +80,11 @@
                             {{-- Estado + Botones --}}
                             {{-- Badge del estado --}}
                             @if ($escuela->estado == 'pendiente')
-                                <span class="badge bg-warning text-dark">Pendiente</span>
+                                <span class="badge rounded-pill bg-warning text-dark">Pendiente</span>
                             @elseif($escuela->estado == 'aprobado')
-                                <span class="badge bg-success">Aprobado</span>
+                                <span class="badge rounded-pill bg-success">Aprobado</span>
                             @else
-                                <span class="badge bg-danger">Rechazado</span>
+                                <span class="badge rounded-pill bg-danger">Rechazado</span>
                             @endif
 
                             <br>
@@ -110,13 +115,13 @@
                         <td>
                             @auth
                                 @if (auth()->user()->role === 'admin')
-                                    <a href="{{ route('escuelas.edit', $escuela) }}" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="{{ route('escuelas.edit', $escuela) }}" class="btn btn-sm btn-warning me-1">Editar</a>
 
                                     <form action="{{ route('escuelas.destroy', $escuela) }}" method="POST"
                                         style="display:inline-block;">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger btn-sm"
+                                        <button class="btn btn-sm btn-danger"
                                             onclick="return confirm('¿Estás seguro de eliminar esta escuela?')">Eliminar</button>
                                     </form>
                                 @endif
