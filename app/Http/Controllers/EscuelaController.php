@@ -137,21 +137,20 @@ class EscuelaController extends Controller
         return redirect()->route('escuelas.index')->with('mensaje', 'Escuela actualizada exitosamente.');
     }
 
-    public function destroy(Escuela $escuela)
-    {
-        // se elimina la escuela y su archivo
-        // 1. obtenemos la escuela
-        $escuela = Escuela::findOrFail($escuela->id);
-        // eliminar el archivo asociado
-        if ($escuela->archivo && Storage::exists('public/' . $escuela->archivo)) {
-            Storage::delete('public/' . $escuela->archivo);
-        }
-        // eliminar la escuela de la base de datos
-        $escuela->delete();
-
-        // redireccionamos a la vista principal con un mensaje
-        return redirect()->route('escuelas.index')->with('success', 'Escuela eliminada exitosamente.');
+public function destroy(Escuela $escuela)
+{
+    // Si existe un archivo asociado, lo eliminamos del storage
+    if ($escuela->archivo && Storage::disk('public')->exists($escuela->archivo)) {
+        Storage::disk('public')->delete($escuela->archivo);
     }
+
+    // Eliminamos la escuela
+    $escuela->delete();
+
+    return redirect()
+        ->route('escuelas.index')
+        ->with('success', 'Escuela eliminada exitosamente.');
+}
 
     //agregamos un metodo para aprobar y rechazar escuelas
     public function aprobar($id)
