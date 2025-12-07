@@ -1,131 +1,204 @@
-# 🥛 Sistema "Copa de Leche" – Laravel
+# 🥛 Sistema "Copa de Leche" -- Laravel
 
-Sistema de gestión desarrollado en Laravel para administrar Escuelas, Solicitudes, Estados y Registros relacionados al programa **Copa de Leche**.  
-Incluye ABM completo, roles (Administrador/Escuela), carga de archivos PDF y un diseño simple y profesional.
+Sistema web para la gestión de Escuelas, Solicitudes y Documentación
 
----
+Este proyecto fue desarrollado para digitalizar y optimizar el proceso
+de administración del programa **Copa de Leche**, permitiendo gestionar
+escuelas, solicitudes, archivos PDF, estados y usuarios con distintos
+roles.
 
-## 🚀 Requisitos del sistema
+Incluye una interfaz clara, responsiva y orientada al uso real en
+instituciones.
+
+
+
+# 🚀 Funcionalidades principales
+
+### ✔️ **Roles y autenticación**
+
+-   Administrador\
+-   Escuela\
+-   Middleware para control de permisos
+
+### ✔️ **Módulos ABM**
+
+-   Escuelas\
+-   Solicitudes\
+-   Documentación en PDF
+
+### ✔️ **Estados de Solicitudes**
+
+-   Pendiente\
+-   Aprobado\
+-   Rechazado
+
+### ✔️ **Manejo de archivos**
+
+-   Subida de PDFs\
+-   Almacenamiento seguro en `storage`
+
+### ✔️ **Interfaz visual limpia**
+
+-   Bootstrap 5\
+-   Diseño ordenado y responsivo
+
+------------------------------------------------------------------------
+
+# ⚙️ Requisitos
 
 Asegurate de tener instalado:
 
-- **PHP 8.1 o superior**
-- **Composer**
-- **MySQL o MariaDB**
-- **Node.js 18+**
-- **Laravel 10 o superior**
-- Extensión PHP: `fileinfo`, `openssl`, `pdo`, etc.
+-   PHP **8.1+**\
+-   Composer\
+-   MySQL / MariaDB\
+-   Node.js **18+**\
+-   Extensiones PHP necesarias: `pdo`, `fileinfo`, `openssl`, etc.\
+-   Laravel **10+**
 
----
+------------------------------------------------------------------------
 
-## 📥 Instalación del proyecto
+# 📥 Instalación
 
 ### 1️⃣ Clonar el repositorio
 
+``` bash
 git clone https://github.com/marcosmatiasnieto/copaDeLeche.git
+```
 
+### 2️⃣ Ingresar al proyecto
 
-### 2️⃣ Entrar al proyecto
-
+``` bash
 cd copaDeLeche
+```
 
 ### 3️⃣ Instalar dependencias de PHP
 
+``` bash
 composer install
+```
 
-### 4️⃣ Instalar dependencias de JS
+### 4️⃣ Instalar dependencias de Node
+
+``` bash
 npm install
+```
 
+------------------------------------------------------------------------
 
-## ⚙️ Configuración del entorno
+# 🔧 Configuración del entorno
 
-### 5️⃣ Crear el archivo .env
+### 5️⃣ Crear archivo `.env`
 
+``` bash
 cp .env.example .env
+```
 
-### 6️⃣ Generar la key de Laravel
+### 6️⃣ Generar la APP_KEY
 
+``` bash
 php artisan key:generate
+```
 
-### 7️⃣ Configurar la base de datos en .env
-dentro de .env
+### 7️⃣ Configurar la base de datos en `.env`
 
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=db_copa_de_leche_app
-DB_USERNAME=root
-DB_PASSWORD=
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=db_copa_de_leche_app
+    DB_USERNAME=root
+    DB_PASSWORD=
 
-## 🗄️ Migraciones y datos
+------------------------------------------------------------------------
 
-### 8️⃣ Crear la base de datos en MySQL
+# 🗄️ Base de datos
 
+### 8️⃣ Crear la base de datos
+
+``` sql
 CREATE DATABASE db_copa_de_leche_app;
+```
 
 ### 9️⃣ Ejecutar migraciones
 
--php artisan migrate
+``` bash
+php artisan migrate
+```
 
-(Si tenés seeders)
+### Ejecutar seeders
 
--php artisan db:seed
+``` bash
+php artisan db:seed
+```
 
-## 🖼️ Assets y estilos
+------------------------------------------------------------------------
 
-### 🔟 Compilar assets
+# 🎨 Compilar assets
 
-#### Para entorno local:
+### Entorno local
 
+``` bash
 npm run dev
+```
 
-#### Para producción:
+### Producción
 
+``` bash
 npm run build
+```
 
-## ▶️ Ejecutar el servidor
+------------------------------------------------------------------------
 
+# ▶️ Ejecutar el servidor
+
+``` bash
 php artisan serve
+```
 
-#### El sistema estará disponible en:
+El sistema estará disponible en:\
+👉 **http://127.0.0.1:8000**
 
-http://127.0.0.1:8000
+------------------------------------------------------------------------
 
+# 👥 Usuarios iniciales (si usás seeders)
 
-## 👥 Usuarios iniciales (opcional)
+### **Administrador**
 
-Si agregaste un seeder, poner por ejemplo:
+Email: `admin@example.com`\
+Contraseña: `admin123`
 
-Administrador:
-Email: admin@example.com
-Contraseña: admin123
+### **Escuela**
 
-Escuela:
-Email: escuela@example.com
-Contraseña: escuela123
+Email: `escuela@example.com`\
+Contraseña: `escuela123`
 
-## 📁 Estructura principal del proyecto
+------------------------------------------------------------------------
 
-/app → Lógica del sistema
+# 📁 Estructura principal
 
-/resources/views → Vistas Blade (escuelas, solicitudes, etc.)
+    /app                   → Controladores, modelos y lógica
+    /resources/views       → Vistas Blade
+    /public/img            → Imágenes del sistema
+    /routes/web.php        → Rutas principales
+    /storage/app/public    → PDFs subidos por los usuarios
 
-/public/img → Logos e imágenes del sistema
+------------------------------------------------------------------------
 
-/routes/web.php → Rutas principales
+# 🛠️ Tecnologías utilizadas
 
-## 🛠️ Tecnologías utilizadas
+-   Laravel 10\
+-   MySQL\
+-   Bootstrap 5\
+-   Blade Templates\
+-   Middleware de roles\
+-   Upload de archivos PDF con Storage
 
-- Laravel
-- Bootstrap 5
-- MySQL
-- Blade Templates
-- Middleware para control de roles
-- Storage para archivos PDF
+------------------------------------------------------------------------
 
-## 📄 Licencia
+# 📄 Licencia
 
-Proyecto de uso interno. Distribución restringida salvo permiso de su creador.
+Proyecto de uso interno.\
+Distribución permitida únicamente con autorización del autor.
 
-## 🥛 ¡Gracias por utilizar el "sistema Copa de Leche"!
+------------------------------------------------------------------------
 
+# 🥛 Gracias por usar el Sistema "Copa de Leche"
