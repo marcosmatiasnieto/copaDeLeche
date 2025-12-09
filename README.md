@@ -163,12 +163,12 @@ El sistema estará disponible en:\
 
 ### **Administrador**
 
-Email: `admin@example.com`\
+Email: `administrador@gmail.com`\
 Contraseña: `admin123`
 
 ### **Escuela**
 
-Email: `escuela@example.com`\
+Email: `escuela@gmail.com`\
 Contraseña: `escuela123`
 
 ------------------------------------------------------------------------
