@@ -129,6 +129,11 @@ php artisan migrate
 ``` bash
 php artisan db:seed
 ```
+### generar la key 
+
+``` bash
+php artisan key:generate
+```
 
 ------------------------------------------------------------------------
 
