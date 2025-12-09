@@ -134,6 +134,11 @@ php artisan db:seed
 ``` bash
 php artisan key:generate
 ```
+### linkear carpeta store
+
+``` bash
+php artisan storage:link
+```
 
 ------------------------------------------------------------------------
 
