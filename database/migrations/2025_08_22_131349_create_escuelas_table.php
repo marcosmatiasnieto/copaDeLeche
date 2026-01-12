@@ -16,10 +16,13 @@ return new class extends Migration
             $table->string('escuela');
             $table->integer('n_cue');
             $table->integer('matricula');
-            $table->string('telefono') ->nullable();
-            $table->string('direccion');
-            $table->string('localidad')->nullable(); ;
-            $table->string('provincia')->nullable(); ;
+            $table->string('expediente');
+            $table->string('telefono')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('email')->nullable();
+            $table->string('localidad');
+            $table->string('departamento');
+            $table->enum('zona', ['Zona A', 'Zona B', 'Zona C']);
 
             $table->string('archivo');
             $table->enum('estado', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');
