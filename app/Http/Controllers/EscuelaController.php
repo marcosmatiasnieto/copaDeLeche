@@ -20,7 +20,8 @@ class EscuelaController extends Controller
         $escuelas = Escuela::query()
             ->when($busqueda, function ($query) use ($busqueda) {
                 $query->where('n_cue', 'like', "%{$busqueda}%")
-                    ->orWhere('escuela', 'like', "%{$busqueda}%");
+                    ->orWhere('escuela', 'like', "%{$busqueda}%")
+                    ->orWhere('expediente', 'like', "%{$busqueda}%");
             })
             ->orderBy('id')
             ->paginate(5);
@@ -64,8 +65,8 @@ class EscuelaController extends Controller
         //aqui va la logica para guardar una nueva escuela y validacion de datos en el create
         $campos = [
             'escuela' => 'required|string|max:100',
-            'n_cue' => 'required|integer|max:15',
-            'matricula' => 'required|integer|max:15',
+            'n_cue' => 'required|string|max:15',
+            'matricula' => 'required|string|max:15',
             'expediente' => ['required', 'regex:/^[A-Za-z0-9\-\/]+$/'],
             'telefono' => 'required|string|max:15',
             'direccion' => 'required|string|max:100',
@@ -148,8 +149,8 @@ class EscuelaController extends Controller
         // validacion de datos en el edit
         $campos = [
             'escuela' => 'required|string|max:100',
-            'n_cue' => 'required|integer',
-            'matricula' => 'required|integer',
+            'n_cue' => 'required|string|max:15',
+            'matricula' => 'required|string|max:15',
             'expediente' => ['required', 'regex:/^[A-Za-z0-9\-\/]+$/'],
             'telefono' => 'nullable|string|max:15',
             'direccion' => 'nullable|string|max:100',

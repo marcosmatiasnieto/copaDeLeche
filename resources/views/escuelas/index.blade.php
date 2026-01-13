@@ -48,13 +48,8 @@
                     <th>Escuela</th>
                     <th>N°cue</th>
                     <th>Matricula</th>
-                    <th>Telefono</th>
-                    <th>Direccion</th>
-                    <th>Localidad</th>
-                    <th>Provincia</th>
-                    <th>Archivo</th>
+                    <th>Expediente</th>
                     <th>Estado</th>
-
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -66,15 +61,8 @@
                         <td>{{ $escuela->escuela }}</td>
                         <td>{{ $escuela->n_cue }}</td>
                         <td>{{ $escuela->matricula }}</td>
-                        <td>{{ $escuela->telefono }}</td>
-                        <td>{{ $escuela->direccion }}</td>
-                        <td>{{ $escuela->localidad }}</td>
-                        <td>{{ $escuela->provincia }}</td>
+                        <td>{{ $escuela->expediente }}</td>
 
-                        <td><a href="{{ asset('storage/' . $escuela->archivo) }}" target="_blank">
-                                {{ basename($escuela->archivo) }}
-                            </a>
-                        </td>
                         <td>
 
                             {{-- Estado + Botones --}}
@@ -113,9 +101,14 @@
 
                         {{-- Editar-Eliminar --}}
                         <td>
+                            <a href="{{ route('escuelas.show', $escuela) }}" class="btn btn-sm btn-info me-1">
+                                Ver informacion
+                            </a>
+
                             @auth
                                 @if (auth()->user()->role === 'admin')
-                                    <a href="{{ route('escuelas.edit', $escuela) }}" class="btn btn-sm btn-warning me-1">Editar</a>
+                                    <a href="{{ route('escuelas.edit', $escuela) }}"
+                                        class="btn btn-sm btn-warning me-1">Editar</a>
 
                                     <form action="{{ route('escuelas.destroy', $escuela) }}" method="POST"
                                         style="display:inline-block;">
