@@ -32,7 +32,28 @@ class EscuelaController extends Controller
      */
     public function create()
     {
-        return view('escuelas.create');
+        $zonas = ['Zona A', 'Zona B', 'Zona C'];
+
+        $departamentos = [
+            'Capital',
+            'Chilecito',
+            'Chamical',
+            'Arauco',
+            'Castro Barros',
+            'Coronel Felipe Varela',
+            'Famatina',
+            'General Ángel V. Peñaloza',
+            'General Belgrano',
+            'General Juan Facundo Quiroga',
+            'General Lamadrid',
+            'General Ocampo',
+            'Independencia',
+            'Rosario Vera Peñaloza',
+            'San Blas de los Sauces',
+            'Sanagasta',
+            'Vinchina'
+        ];
+        return view('escuelas.create', compact('zonas', 'departamentos'));
     }
 
     /**
@@ -43,13 +64,15 @@ class EscuelaController extends Controller
         //aqui va la logica para guardar una nueva escuela y validacion de datos en el create
         $campos = [
             'escuela' => 'required|string|max:100',
-            'n_cue' => 'required|string|max:15',
-            'matricula' => 'required|string|max:15',
+            'n_cue' => 'required|integer|max:15',
+            'matricula' => 'required|integer|max:15',
+            'expediente' => ['required', 'regex:/^[A-Za-z0-9\-\/]+$/'],
             'telefono' => 'required|string|max:15',
             'direccion' => 'required|string|max:100',
+            'email' => 'nullable|email|max:100',
             'localidad' => 'required|string|max:100',
-            'provincia' => 'required|string|max:100',
-
+            'departamento' => 'required|string|max:100',
+            'zona' => 'required|in:Zona A,Zona B,Zona C',
             'archivo' => 'required|max:10000|mimes:pdf,doc,docx',
         ];
         $mensaje = [
@@ -74,7 +97,7 @@ class EscuelaController extends Controller
             $datosEscuela['archivo'] = $ruta;
         }
 
-        Escuela::insert($datosEscuela);
+        Escuela::create($datosEscuela);
 
         return redirect()->route('home')
             ->with('success', 'Escuela creada correctamente');
@@ -82,7 +105,7 @@ class EscuelaController extends Controller
 
     public function show(Escuela $escuela)
     {
-        //
+        return view('escuelas.show', compact('escuela'));
     }
 
     /**
@@ -91,8 +114,30 @@ class EscuelaController extends Controller
     public function edit(Escuela $escuela)
     {
         // buscamos la escuela por su id
-        $escuela = Escuela::findOrFail($escuela->id);
-        return view('escuelas.edit', compact('escuela'));
+        // $escuela = Escuela::findOrFail($escuela->id);
+        $zonas = ['Zona A', 'Zona B', 'Zona C'];
+
+        $departamentos = [
+            'Capital',
+            'Chilecito',
+            'Chamical',
+            'Arauco',
+            'Castro Barros',
+            'Coronel Felipe Varela',
+            'Famatina',
+            'General Ángel V. Peñaloza',
+            'General Belgrano',
+            'General Juan Facundo Quiroga',
+            'General Lamadrid',
+            'General Ocampo',
+            'Independencia',
+            'Rosario Vera Peñaloza',
+            'San Blas de los Sauces',
+            'Sanagasta',
+            'Vinchina'
+        ];
+
+        return view('escuelas.edit', compact('escuela', 'zonas', 'departamentos'));
     }
 
     /**
@@ -103,12 +148,15 @@ class EscuelaController extends Controller
         // validacion de datos en el edit
         $campos = [
             'escuela' => 'required|string|max:100',
-            'n_cue' => 'required|string|max:15',
-            'matricula' => 'required|string|max:15',
-            'telefono' => 'required|string|max:15',
-            'direccion' => 'required|string|max:100',
+            'n_cue' => 'required|integer',
+            'matricula' => 'required|integer',
+            'expediente' => ['required', 'regex:/^[A-Za-z0-9\-\/]+$/'],
+            'telefono' => 'nullable|string|max:15',
+            'direccion' => 'nullable|string|max:100',
+            'email' => 'nullable|email|max:100',
             'localidad' => 'required|string|max:100',
-            'provincia' => 'required|string|max:100',
+            'departamento' => 'required|string|max:100',
+            'zona' => 'required|in:Zona A,Zona B,Zona C',
         ];
         $mensaje = [
             'required' => 'El :attribute es requerido',
@@ -124,33 +172,35 @@ class EscuelaController extends Controller
 
         // aqui vemos que el archivo que se edite se elimine el atiguo
         if ($request->hasFile('archivo')) {
-            $escuela = Escuela::findOrFail($escuela->id);
-            Storage::delete('public/' . $escuela->archivo);
+            if ($escuela->archivo) {
+                Storage::disk('public')->delete($escuela->archivo);
+            }
+
             $archivo = $request->file('archivo');
             $nombreOriginal = $archivo->getClientOriginalName();
             $ruta = $archivo->storeAs('uploads', $nombreOriginal, 'public');
             $datosEscuela['archivo'] = $ruta;
         }
 
-        Escuela::where('id', '=', $escuela->id)->update($datosEscuela);
+        $escuela->update($datosEscuela);
         // redireccionamos a la vista principal con un mensaje
         return redirect()->route('escuelas.index')->with('mensaje', 'Escuela actualizada exitosamente.');
     }
 
-public function destroy(Escuela $escuela)
-{
-    // Si existe un archivo asociado, lo eliminamos del storage
-    if ($escuela->archivo && Storage::disk('public')->exists($escuela->archivo)) {
-        Storage::disk('public')->delete($escuela->archivo);
+    public function destroy(Escuela $escuela)
+    {
+        // Si existe un archivo asociado, lo eliminamos del storage
+        if ($escuela->archivo && Storage::disk('public')->exists($escuela->archivo)) {
+            Storage::disk('public')->delete($escuela->archivo);
+        }
+
+        // Eliminamos la escuela
+        $escuela->delete();
+
+        return redirect()
+            ->route('escuelas.index')
+            ->with('success', 'Escuela eliminada exitosamente.');
     }
-
-    // Eliminamos la escuela
-    $escuela->delete();
-
-    return redirect()
-        ->route('escuelas.index')
-        ->with('success', 'Escuela eliminada exitosamente.');
-}
 
     //agregamos un metodo para aprobar y rechazar escuelas
     public function aprobar($id)
