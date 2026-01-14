@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EscuelaController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\InformeController;
 
 // ==========================
 // AUTENTICACIÓN
@@ -44,4 +45,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Aprobar / Rechazar
     Route::patch('/escuelas/{id}/aprobar', [EscuelaController::class, 'aprobar'])->name('escuelas.aprobar');
     Route::patch('/escuelas/{id}/rechazar', [EscuelaController::class, 'rechazar'])->name('escuelas.rechazar');
+
+    // Informes
+    Route::get('/informes/escuelas', [InformeController::class, 'escuelas'])
+        ->name('informes.escuelas');
+
+    Route::get('/informes', [InformeController::class, 'index'])
+        ->name('informes.index');
+    Route::get('/informes/pdf/escuelas', [InformeController::class, 'pdfEscuelas'])
+        ->name('informes.pdf.escuelas');
+    Route::get('/informes/pdf/estado', [InformeController::class, 'pdfEstado'])
+        ->name('informes.pdf.estado');
 });

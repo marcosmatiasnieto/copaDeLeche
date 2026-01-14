@@ -20,13 +20,15 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-            body.fondo-copa {
-        background-image: url('{{ asset('img/fondo-copa-leche.png') }}');
-        background-size: 350px; /* ajusta el tamaño del patrón */
-        background-repeat: repeat; /* patrón repetido */
-        background-attachment: fixed;
-        background-position: center;
-    }
+        body.fondo-copa {
+            background-image: url('{{ asset('img/fondo-copa-leche.png') }}');
+            background-size: 350px;
+            /* ajusta el tamaño del patrón */
+            background-repeat: repeat;
+            /* patrón repetido */
+            background-attachment: fixed;
+            background-position: center;
+        }
     </style>
 
 </head>
@@ -37,7 +39,8 @@
             <div class="container">
 
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-                    <img src="{{ asset('img/Desarrollo.jpg') }}" alt="Logo La Rioja" style="height: 45px; object-fit: contain;">
+                    <img src="{{ asset('img/Desarrollo.jpg') }}" alt="Logo La Rioja"
+                        style="height: 45px; object-fit: contain;">
                 </a>
 
                 <a class="navbar-brand ms-3 fw-bold" href="{{ url('/') }}">
@@ -59,6 +62,30 @@
                         <li class="nav-item me-3">
                             <a class="nav-link" href="{{ route('escuelas.index') }}">{{ __('Escuelas') }}</a>
                         </li>
+
+                        @auth
+                            @if (auth()->user()->role === 'admin')
+                                <li class="nav-item dropdown me-3">
+                                    <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        📊 Informes
+                                    </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item"href="{{ route('informes.escuelas') }}" >
+                                                Informe General
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('informes.index') }}">
+                                                Informe por Estado
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
+                        @endauth
 
                         @guest
                             @if (Route::has('login'))
@@ -111,6 +138,9 @@
             <p class="mb-1">&copy; {{ date('Y') }} Mi Proyecto de Escuelas. Todos los derechos reservados.</p>
         </div>
     </footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+@stack('scripts')
 </body>
 
 </html>
