@@ -32,7 +32,9 @@
         <tr>
             <th>Escuela</th>
             <th>N° CUE</th>
+            <th>Expediente</th>
             <th>Departamento</th>
+            <th>Zona</th>
             <th>Estado</th>
         </tr>
     </thead>
@@ -41,7 +43,9 @@
             <tr>
                 <td>{{ $escuela->escuela }}</td>
                 <td>{{ $escuela->n_cue }}</td>
+                <td>{{ $escuela->expediente }}</td>
                 <td>{{ $escuela->departamento }}</td>
+                <td>{{ $escuela->zona }}</td>
                 <td>{{ ucfirst($escuela->estado) }}</td>
             </tr>
         @endforeach
