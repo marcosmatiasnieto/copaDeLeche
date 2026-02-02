@@ -139,7 +139,11 @@ php artisan key:generate
 ``` bash
 php artisan storage:link
 ```
+### Descargar para pdf
 
+``` bash
+composer require barryvdh/laravel-dompdf  
+```
 ------------------------------------------------------------------------
 
 # 🎨 Compilar assets
