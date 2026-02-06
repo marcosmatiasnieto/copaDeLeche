@@ -44,7 +44,7 @@
                 </a>
 
                 <a class="navbar-brand ms-3 fw-bold" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'CDL') }}
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
