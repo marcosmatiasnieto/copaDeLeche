@@ -15,6 +15,49 @@
             </p>
         </div>
 
+<form method="GET" action="{{ route('informes.escuelas') }}" class="row g-2 mb-4">
+
+    <div class="col-md-3">
+        <select name="departamento" class="form-select">
+            <option value="">Todos los departamentos</option>
+            @foreach ($departamentos as $dpto)
+                <option value="{{ $dpto }}" {{ request('departamento') == $dpto ? 'selected' : '' }}>
+                    {{ $dpto }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <select name="zona" class="form-select">
+            <option value="">Todas las zonas</option>
+            @foreach ($zonas as $zona)
+                <option value="{{ $zona }}" {{ request('zona') == $zona ? 'selected' : '' }}>
+                    {{ $zona }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <select name="estado" class="form-select">
+            <option value="">Todos los estados</option>
+            @foreach ($estados as $estado)
+                <option value="{{ $estado }}" {{ request('estado') == $estado ? 'selected' : '' }}>
+                    {{ ucfirst($estado) }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <button class="btn btn-primary w-100">
+            🔍 Filtrar
+        </button>
+    </div>
+
+</form>
+
         <table class="table table-bordered table-sm">
             <thead class="table-light">
                 <tr>
@@ -41,7 +84,7 @@
                 @endforeach
             </tbody>
         </table>
-        <a href="{{ route('informes.pdf.escuelas') }}" class="btn btn-danger mb-3" target="_blank">
+        <a href="{{ route('informes.pdf.escuelas', request()->query()) }}" class="btn btn-danger mb-3" target="_blank">
             📄 Descargar PDF
         </a>
     </div>

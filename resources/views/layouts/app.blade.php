@@ -30,6 +30,7 @@
             background-position: center;
         }
     </style>
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/logoCDL.ico') }}">
 
 </head>
 

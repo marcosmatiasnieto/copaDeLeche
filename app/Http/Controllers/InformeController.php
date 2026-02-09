@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Escuela;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class InformeController extends Controller
 {
@@ -29,16 +30,53 @@ class InformeController extends Controller
     /**
      * Listado de escuelas (detalle)
      */
-    public function escuelas()
-    {
-        $escuelas = Escuela::orderBy('escuela')->get();
+    public function escuelas(Request $request)
+{
+    $query = Escuela::query();
 
-        return view('informes.escuelas', compact('escuelas'));
+    if ($request->filled('departamento')) {
+        $query->where('departamento', $request->departamento);
     }
 
-    public function pdfEscuelas()
+    if ($request->filled('zona')) {
+        $query->where('zona', $request->zona);
+    }
+
+    if ($request->filled('estado')) {
+        $query->where('estado', $request->estado);
+    }
+
+    $escuelas = $query->orderBy('id', 'desc')->get();
+
+    // Listados reales desde la BD
+    $departamentos = Escuela::select('departamento')->distinct()->orderBy('departamento')->pluck('departamento');
+    $zonas = Escuela::select('zona')->distinct()->orderBy('zona')->pluck('zona');
+    $estados = ['aprobado', 'rechazado', 'pendiente'];
+
+    return view('informes.escuelas', compact(
+        'escuelas',
+        'departamentos',
+        'zonas',
+        'estados'
+    ));
+}
+public function pdfEscuelas(Request $request)
 {
-    $escuelas = Escuela::orderBy('escuela')->get();
+    $query = Escuela::query();
+
+    if ($request->filled('departamento')) {
+        $query->where('departamento', $request->departamento);
+    }
+
+    if ($request->filled('zona')) {
+        $query->where('zona', $request->zona);
+    }
+
+    if ($request->filled('estado')) {
+        $query->where('estado', $request->estado);
+    }
+
+    $escuelas = $query->orderBy('id', 'desc')->get();
 
     $pdf = Pdf::loadView('informes.pdf.escuelas', compact('escuelas'));
 
