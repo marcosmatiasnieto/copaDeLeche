@@ -46,7 +46,7 @@ class InformeController extends Controller
         $query->where('estado', $request->estado);
     }
 
-    $escuelas = $query->orderBy('id', 'desc')->get();
+    $escuelas = $query->orderBy('id', 'asc')->get();
 
     // Listados reales desde la BD
     $departamentos = Escuela::select('departamento')->distinct()->orderBy('departamento')->pluck('departamento');
@@ -76,7 +76,7 @@ public function pdfEscuelas(Request $request)
         $query->where('estado', $request->estado);
     }
 
-    $escuelas = $query->orderBy('id', 'desc')->get();
+    $escuelas = $query->orderBy('id', 'asc')->get();
 
     $pdf = Pdf::loadView('informes.pdf.escuelas', compact('escuelas'));
 
